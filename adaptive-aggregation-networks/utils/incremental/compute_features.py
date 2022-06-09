@@ -48,8 +48,8 @@ def compute_features(the_args, fusion_vars, tg_model, free_model, tg_feature_mod
             else:
                 the_feature = process_inputs_fp(the_args, fusion_vars, tg_model, free_model, inputs, feature_mode=True)
 
-            print(is_start_iteration)
-            print(features.shape, the_feature.shape)
+            # print(is_start_iteration)
+            # print(features.shape, the_feature.shape)
             features[start_idx:start_idx+inputs.shape[0], :] = np.squeeze(the_feature.cpu())
             start_idx = start_idx+inputs.shape[0]
     assert(start_idx==num_samples)
