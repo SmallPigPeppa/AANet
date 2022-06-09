@@ -113,7 +113,8 @@ class ResNet(nn.Module):
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2, last_phase=True)
-        self.avgpool = nn.AvgPool2d(7, stride=1)
+        # self.avgpool = nn.AvgPool2d(7, stride=1)
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = modified_linear.CosineLinear(512 * block.expansion, num_classes)
 
         for m in self.modules():
@@ -172,14 +173,17 @@ def resnet34(pretrained=False, **kwargs):
     model = ResNet(BasicBlock, [3, 4, 6, 3], **kwargs)
     return model
 
+
 def resnet50(pretrained=False, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     return model
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     import torch
-    r50=resnet50()
-    x = torch.rand([128,3,224,224])
-    z=r50(x)
+
+    r50 = resnet50()
+    x = torch.rand([128, 3, 224, 224])
+    z = r50(x)
     print(z)
     print(z.shape)
