@@ -52,7 +52,15 @@ def process_inputs_fp(the_args, fusion_vars, b1_model, b2_model, inputs, feature
     fp3 = fusion_vars[2]*b1_fp3+(1-fusion_vars[2])*b2_fp3
 
     if the_args.dataset == 'cifar100': 
-        fp_final = fp3.view(fp3.size(0), -1)
+        # fp_final = fp3.view(fp3.size(0), -1)
+        b1_model_group4 = [b1_model.layer4, b1_model.avgpool]
+        b1_model_group4 = nn.Sequential(*b1_model_group4)
+        b1_fp4 = b1_model_group4(fp3)
+        b2_model_group4 = [b2_model.layer4, b2_model.avgpool]
+        b2_model_group4 = nn.Sequential(*b2_model_group4)
+        b2_fp4 = b2_model_group4(fp3)
+        fp4 = fusion_vars[3]*b1_fp4+(1-fusion_vars[3])*b2_fp4
+        fp_final = fp4.view(fp4.size(0), -1)
     elif the_args.dataset == 'imagenet_sub' or the_args.dataset == 'imagenet':
         # The 4th level
         b1_model_group4 = [b1_model.layer4, b1_model.avgpool]
