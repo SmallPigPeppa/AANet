@@ -53,6 +53,7 @@ def process_inputs_fp(the_args, fusion_vars, b1_model, b2_model, inputs, feature
 
     if the_args.dataset == 'cifar100': 
         # fp_final = fp3.view(fp3.size(0), -1)
+        # The 4th level
         b1_model_group4 = [b1_model.layer4, b1_model.avgpool]
         b1_model_group4 = nn.Sequential(*b1_model_group4)
         b1_fp4 = b1_model_group4(fp3)

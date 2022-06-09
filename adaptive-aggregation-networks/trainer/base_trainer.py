@@ -195,11 +195,13 @@ class BaseTrainer(object):
             # CIFAR-100, the number of blocks: 3
             if self.args.branch_mode == 'dual':
                 # Dual branch mode, intialize the aggregation weights to 0.5
-                for idx in range(3):
+                # for idx in range(3):
+                for idx in range(4):
                     self.fusion_vars.append(nn.Parameter(torch.FloatTensor([0.5])))
             elif self.args.branch_mode == 'single':
                 # Single branch mode, intialize the aggregation weights for the 1st branch to 1.0, and never update them
-                for idx in range(3):
+                # for idx in range(3):
+                for idx in range(4):
                     self.fusion_vars.append(nn.Parameter(torch.FloatTensor([1.0])))
             else:
                 raise ValueError('Please set correct mode.')
