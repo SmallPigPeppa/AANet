@@ -246,7 +246,7 @@ class BaseTrainer(object):
             # If we don't have the class order file, generate a new one
             print("Generating a new class order")
             order = np.arange(self.args.num_classes)
-            np.random.shuffle(order)
+            # np.random.shuffle(order)
             utils.misc.savepickle(order, order_name)
         # Transfer the array to a list
         order_list = list(order)
