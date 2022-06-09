@@ -34,6 +34,8 @@ import math
 import utils.misc
 import models.modified_resnet_cifar as modified_resnet_cifar
 import models.modified_resnetmtl_cifar as modified_resnetmtl_cifar
+import models.modified_resnet50_cifar as modified_resnet50_cifar
+import models.modified_resnet50mtl_cifar as modified_resnet50mtl_cifar
 import models.modified_resnet as modified_resnet
 import models.modified_resnetmtl as modified_resnetmtl
 import models.modified_linear as modified_linear
@@ -106,8 +108,13 @@ class BaseTrainer(object):
             self.evalset = torchvision.datasets.CIFAR100(root='./data', train=False, download=False, transform=self.transform_test)
             self.balancedset = torchvision.datasets.CIFAR100(root='./data', train=False, download=False, transform=self.transform_train)
             # Set the network architecture
-            self.network = modified_resnet_cifar.resnet32
-            self.network_mtl = modified_resnetmtl_cifar.resnetmtl32
+            # self.network = modified_resnet_cifar.resnet32
+            # self.network_mtl = modified_resnetmtl_cifar.resnetmtl32
+
+            self.network = modified_resnet50_cifar.resnet50
+            self.network_mtl = modified_resnet50mtl_cifar.resnetmtl50
+
+
             # Set the learning rate decay parameters
             self.lr_strat = [int(self.args.epochs*0.5), int(self.args.epochs*0.75)]
             # Set the dictionary size
